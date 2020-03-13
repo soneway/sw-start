@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <title>sw-start</title>
+  </head>
+  <body>
+    <img src="a.jpg" />
+    <img src="b.jpg" />
+    <script>
+      navigator.serviceWorker.register('./sw.js', { scope: '/github/sw-start/' })
+        .then((res) => {
+          console.log('ok', res);
+          // 向所有sw发信息
+          navigator.serviceWorker.controller.postMessage('message from index.html');
+          // 向当前sw发信息
+          res.active.postMessage('message from index.html hehe');
+        })
+        .catch((err) => {
+          console.log('err', err);
+        });
+    </script>
+  </body>
+</html>
