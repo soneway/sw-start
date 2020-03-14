@@ -25,11 +25,12 @@ this.addEventListener('fetch', (event) => {
       .then((res) => {
         return res || fetch(event.request)
           .then((res) => {
+            const resClone = res.clone();
             caches.open('sw-fetch')
               .then((cache) => {
-                cache.put(event.request, res.clone());
+                cache.put(event.request, resClone);
               });
-            return res;
+            return resClone;
           })
           .catch(err => console.log(err));
       }),
